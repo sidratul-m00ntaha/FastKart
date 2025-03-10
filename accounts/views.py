@@ -14,7 +14,7 @@ def user_signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            # return redirect("dashboard")
+            return redirect("profile")
     else:
         form = CustomUserRegistrationForm()
     
@@ -29,7 +29,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             messages.success(request, "You have successfully logged in.")
-            return redirect("signup")
+            return redirect("profile")
         else:
             messages.error(request, "Invalid username or password.")
     else:
@@ -42,3 +42,23 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('signup')
+
+
+@login_required
+def user_dashboard(request):
+    user = request.user
+
+    if request.method == 'POST':
+        user.email = request.POST.get('email', user.email)
+        user.mobile = request.POST.get('mobile', user.mobile)
+        user.address_line_1 = request.POST.get('address_line_1', user.address_line_1)
+        user.address_line_2 = request.POST.get('address_line_2', user.address_line_2)
+        user.city = request.POST.get('city', user.city)
+        user.state = request.POST.get('state', user.state)
+        user.country = request.POST.get('country', user.country)
+        user.save()
+
+        return redirect('profile')
+
+    context = { 'user_info': user}
+    return render(request, 'accounts/profile.html', context)
