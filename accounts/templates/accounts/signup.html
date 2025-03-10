@@ -49,25 +49,40 @@
                             {% csrf_token %}
                             <div class="col-12">
                                 <div class="form-floating theme-form-floating">
-                                    <input type="text" class="form-control" name="fullname" id="fullname"
-                                        placeholder="Full Name" />
-                                    <label for="fullname">Full Name</label>
+                                    <input type="text" class="form-control" name="first_name"
+                                        placeholder="First Name" />
+                                    <label for="fullname">First Name</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating theme-form-floating">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Email Address" />
+                                    <input type="text" class="form-control" name="last_name" placeholder="Last Name" />
+                                    <label for="fullname">Last Name</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating">
+                                    <input type="email" class="form-control" name="email" placeholder="Email Address" />
                                     <label for="email">Email Address</label>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="form-floating theme-form-floating">
-                                    <input type="password" class="form-control" name="password" name=id="password"
+                                    <input type="password" class="form-control" name="password1"
                                         placeholder="Password" />
-                                    <label for="password">Password</label>
+                                    <label for="password1">Password</label>
                                 </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating">
+                                    <input type="password" class="form-control" name="password2"
+                                        placeholder="Confirm Password" />
+                                    <label for="password2">Confirm Password</label>
+                                </div>
+
                             </div>
 
                             <div class="col-12">
