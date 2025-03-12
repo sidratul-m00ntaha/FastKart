@@ -27,5 +27,29 @@ def send_verification_email(request, user):
         to=[user.email],
     )
 
-    email.content_subtype = 'html'  # Ensure the email is sent as HTML
+    email.content_subtype = 'html'
+    email.send()
+
+
+def send_password_reset_email(request, user):
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+
+    current_site = get_current_site(request)
+    verification_link = f"http://{current_site.domain}/accounts/reset-password-confirm/{uid}/{token}"
+
+    email_subject = 'Reset you password'
+    email_body = render_to_string('accounts/verification_email.html', {
+        'user': user,
+        'verification_link': verification_link
+    })
+
+    email = EmailMessage(
+        subject=email_subject,
+        body=email_body,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[user.email],
+    )
+
+    email.content_subtype = 'html'
     email.send()
