@@ -68,7 +68,7 @@ class Product(TimeStampedModel):
     def __str__(self):
         return self.name
 
-    def average_review(self):
+    def averageReview(self):
         reviews = Review.objects.filter(product=self, status=True).aggregate(average=Avg('rating'))
         avg = 0
         if reviews['average'] is not None:
