@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
 from accounts.forms import CustomUserRegistrationForm
+from accounts.utils import send_verification_email
 
 
 def user_signup(request):
@@ -13,6 +14,7 @@ def user_signup(request):
         form = CustomUserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            send_verification_email(request, user)
             login(request, user)
             return redirect("profile")
     else:
