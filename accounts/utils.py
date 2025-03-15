@@ -38,7 +38,7 @@ def send_password_reset_email(request, user):
     current_site = get_current_site(request)
     verification_link = f"http://{current_site.domain}/accounts/reset-password-confirm/{uid}/{token}"
 
-    email_subject = 'Reset you password'
+    email_subject = 'Reset Your Password'
     email_body = render_to_string('accounts/verification_email.html', {
         'user': user,
         'verification_link': verification_link
