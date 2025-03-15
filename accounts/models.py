@@ -19,3 +19,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     username = None
+
+    def full_address(self):
+        return f'{self.address_line_1} {self.address_line_2}'

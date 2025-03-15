@@ -1,14 +1,18 @@
 import datetime
+from decimal import Decimal
 
+from django.conf import settings
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from sslcommerz_python_api import SSLCSession
 
 from carts.models import CartItem
 from products.models import Product
 
-from .models import Order, OrderProduct
+from .models import Order, OrderProduct, Payment
 from .utils import send_order_confirmation_email
 
 
@@ -87,3 +91,104 @@ def place_order(request, total=0, quantity=0,):
         'total': total,
     }
     return render(request, 'orders/checkout.html', context)
+
+
+@login_required
+def payment(request):
+    mypayment = SSLCSession(
+        sslc_is_sandbox=settings.SSLCOMMERZ_IS_SANDBOX,
+        sslc_store_id=settings.SSLCOMMERZ_STORE_ID,
+        sslc_store_pass=settings.SSLCOMMERZ_STORE_PASS,
+    )
+    
+    status_url = request.build_absolute_uri('sslc/status')
+
+    mypayment.set_urls(
+        success_url=status_url,
+        fail_url=status_url,
+        cancel_url=status_url,
+        ipn_url=status_url
+    )
+    
+    user = request.user
+    order = Order.objects.filter(user=user, is_ordered=False).last()
+
+    mypayment.set_product_integration(
+        total_amount=Decimal(order.order_total),
+        currency='BDT',
+        product_category='clothing',
+        product_name='demo-product',
+        num_of_item=2,
+        shipping_method='YES',
+        product_profile='None'
+    )
+
+    mypayment.set_customer_info(
+        name=user.username,
+        email=user.email,
+        address1=user.address_line_1,
+        address2=user.address_line_1,
+        city=user.city, 
+        postcode='1207',
+        country=user.country,
+        phone=user.mobile
+    )
+
+    mypayment.set_shipping_info(
+        shipping_to=user.get_full_name(),
+        address=user.full_address(),
+        city=user.city,
+        postcode='1209',
+        country=user.country,
+    )
+
+    response_data = mypayment.init_payment()
+    return redirect(response_data['GatewayPageURL'])
+
+
+@csrf_exempt 
+def payment_status(request):
+    if request.method == 'POST':
+        payment_data = request.POST
+        if payment_data['status'] == 'VALID':
+            val_id = payment_data['val_id']
+            tran_id = payment_data['tran_id']
+
+            return HttpResponseRedirect(reverse('sslc_complete', kwargs= {'val_id': val_id, 'tran_id': tran_id}))
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Payment failed'})
+    
+    
+    return render(request, 'orders/status.html')
+
+
+def sslc_complete(request, val_id, tran_id):
+    try:
+        order = Order.objects.filter(user=request.user, is_ordered=False).last()
+        
+        payment = Payment.objects.create(
+            user=request.user,
+            payment_id=val_id,
+            payment_method='SSLCommerz',
+            amount_paid=order.order_total,
+            status='Completed'
+        )
+        
+        order.is_ordered = True
+        order.status = 'Completed'
+        order.payment = payment
+        order.save()
+        
+        cart_items = CartItem.objects.filter(user=request.user)
+        cart_items.delete()
+        
+        context = {
+            'order': order,
+            'transaction_id': tran_id,
+        }
+        return render(request, 'orders/status.html', context)
+        
+    except Order.DoesNotExist:
+        return HttpResponse("Order not found", status=404)
+    except Exception as e:
+        return HttpResponse(f"An error occurred: {str(e)}", status=500)

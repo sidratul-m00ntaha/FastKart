@@ -155,6 +155,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+# Email Configuration
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
@@ -162,3 +163,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+# Payment Configuration
+
+SSLCOMMERZ_IS_SANDBOX: bool = env("SSLCOMMERZ_IS_SANDBOX")
+SSLCOMMERZ_STORE_ID = env("SSLCOMMERZ_STORE_ID")
+SSLCOMMERZ_STORE_PASS = env("SSLCOMMERZ_STORE_PASS")
