@@ -58,7 +58,7 @@ def user_dashboard(request):
         user.address_line_1 = request.POST.get("address_line_1", user.address_line_1)
         user.address_line_2 = request.POST.get("address_line_2", user.address_line_2)
         user.city = request.POST.get("city", user.city)
-        user.state = request.POST.get("state", user.state)
+        user.postcode = request.POST.get("postcode", user.postcode)
         user.country = request.POST.get("country", user.country)
         user.save()
 

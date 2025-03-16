@@ -53,7 +53,7 @@ def place_order(
                 address_line_1=current_user.address_line_1,
                 address_line_2=current_user.address_line_2,
                 country=current_user.country,
-                state=current_user.state,
+                postcode=current_user.postcode,
                 city=current_user.city,
                 order_note=request.POST.get("order_note", ""),
                 order_total=grand_total,
@@ -138,7 +138,7 @@ def payment(request):
         address1=user.address_line_1,
         address2=user.address_line_1,
         city=user.city,
-        postcode="1207",
+        postcode=user.postcode,
         country=user.country,
         phone=user.mobile,
     )
@@ -147,7 +147,7 @@ def payment(request):
         shipping_to=user.get_full_name(),
         address=user.full_address(),
         city=user.city,
-        postcode="1209",
+        postcode=user.postcode,
         country=user.country,
     )
 

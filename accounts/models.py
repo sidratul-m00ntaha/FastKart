@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     address_line_1 = models.CharField(null=True, blank=True, max_length=100)
     address_line_2 = models.CharField(null=True, blank=True, max_length=100)
     city = models.CharField(blank=True, max_length=20)
-    state = models.CharField(blank=True, max_length=20)
+    postcode = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)
     mobile = models.CharField(null=True, blank=True, max_length=15)
 
