@@ -35,7 +35,7 @@ def place_order(
     for cart_item in cart_items:
         total += cart_item.product.price * cart_item.quantity
         quantity += cart_item.quantity
-    grand_total = float(total) + float(6.90)
+    grand_total = float(total) + settings.DELIVERY_CHARGE
 
     if request.method == "POST":
         payment_option = request.POST.get("flexRadioDefault", "cash")  # sslcommercez
