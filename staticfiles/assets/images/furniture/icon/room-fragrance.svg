@@ -1,7 +1,7 @@
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="555" height="555">
 	<title>New Project</title>
 	<style>
-		.s0 { fill: #000000 } 
+		.s0 { fill: #000000 }
 	</style>
 	<g id="Layer">
 		<path id="Layer" fill-rule="evenodd" class="s0" d="m409.8 275.5l86 236.5h-479.6l86-236.5-89.4-111.9h486.4zm-299-6.2h290.5l76-95h-442.5zm289.3 10.5h-288.1l-80.7 221.7h449.4z"/>

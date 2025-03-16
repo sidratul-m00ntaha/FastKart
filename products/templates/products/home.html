@@ -17,6 +17,7 @@
                                             <div>
                                                 <h6 class="ls-expanded theme-color text-uppercase">Weekend Special offer
                                                 </h6>
+                                                {{ ratings["1"] }}
                                                 <h1 class="heding-2">Premium Quality Dry Fruits</h1>
                                                 <h2 class="content-2">Dryfruits shopping made Easy</h2>
                                                 <h5 class="text-content">Fresh & Top Quality Dry Fruits are available here!
@@ -126,7 +127,7 @@
                 </div>
             </div>
         </div>
-    </section> 
+    </section>
     <!-- Banner Section End -->
 
 
@@ -139,7 +140,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="category-slider-1 arrow-slider wow fadeInUp">
-                            {%for category in categories %}
+                            {% for category in categories %}
                             <div>
                                 <div class="category-box-list">
                                     <a href="shop-left-sidebar.html" class="category-name">

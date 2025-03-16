@@ -22,7 +22,7 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'), overwrite=True)
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"), overwrite=True)
 
 
 # Quick-start development settings - unsuitable for production
@@ -68,7 +68,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -117,8 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 AUTHENTICATION_BACKENDS = [
-    'accounts.authentication.EmailBackend',  #  custom backend
-    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    "accounts.authentication.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 
@@ -137,9 +137,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, "staticfiles"),
 ]
 
 # Default primary key field type
@@ -150,10 +150,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Media files
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Email Configuration
 
@@ -169,3 +169,6 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 SSLCOMMERZ_IS_SANDBOX: bool = env("SSLCOMMERZ_IS_SANDBOX")
 SSLCOMMERZ_STORE_ID = env("SSLCOMMERZ_STORE_ID")
 SSLCOMMERZ_STORE_PASS = env("SSLCOMMERZ_STORE_PASS")
+
+
+DELIVERY_CHARGE = env("DELIVERY_CHARGE")

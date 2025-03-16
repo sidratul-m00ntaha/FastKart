@@ -870,10 +870,10 @@
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#view">
                                                 <i data-feather="eye"></i>
                                             </a>
-                                            
-                            
+
+
                                         </li>
-                                        
+
                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
                                                 <a href="compare.html">
                                                     <i data-feather="refresh-cw"></i>
@@ -933,7 +933,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="modal fade theme-modal view-modal" id="view" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
@@ -951,7 +951,7 @@
                                                         alt="">
                                                 </div>
                                             </div>
-                        
+
                                             <div class="col-lg-6">
                                                 <div class="right-sidebar-modal">
                                                     <h4 class="title-name" id="modalProductName">{{product.name}}</h4>
@@ -977,7 +977,7 @@
                                                         <span class="ms-2">8 Reviews</span>
                                                         <span class="ms-2 text-danger">6 sold in last 16 hours</span>
                                                     </div>
-                        
+
                                                     <div class="product-detail">
                                                         <h4>Product Details :</h4>
                                                         <p id="modalProductDescription">{{product.description}}</p>
@@ -990,14 +990,14 @@
                                                                 <h6>Black Forest</h6>
                                                             </div>
                                                         </li>
-                        
+
                                                         <li>
                                                             <div class="brand-box">
                                                                 <h5>Product Code:</h5>
                                                                 <h6>W0690034</h6>
                                                             </div>
                                                         </li>
-                        
+
                                                         <li>
                                                             <div class="brand-box">
                                                                 <h5>Product Type:</h5>
@@ -1006,7 +1006,7 @@
                                                         </li>
                                                     </ul>
                                                     -->
-                        
+
                                                     <div class="select-size">
                                                         <h4>Cake Size :</h4>
                                                         <select class="form-select select-form-size">
@@ -1015,7 +1015,7 @@
 
                                                         </select>
                                                     </div>
-                        
+
                                                     <div class="modal-button">
                                                         <!-- # TODO: add add_cart later -->
                                                         <a href= "#"
@@ -1034,15 +1034,15 @@
                         </div>
 <!-- Quick View Modal Box End -->
  <!-- JavaScript to Update Modal Content -->
- 
+
                 {% endfor %}
 <!-- End Product -->
-                      
+
 
                     <nav class="custom-pagination">
                         {% if products.has_other_pages %}
                             <ul class="pagination justify-content-center">
-                                
+
                             <!-- Previous Page Link -->
                                 {% if products.has_previous %}
                                     <li class="page-item">
@@ -1062,7 +1062,7 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                                
+
                                 <!-- Page Numbers -->
                                 {% for num in products.paginator.page_range %}
                                     {% if num == products.number %}
@@ -1075,7 +1075,7 @@
                                         </li>
                                     {% endif %}
                                 {% endfor %}
-                                
+
         <!-- Next Page Link -->
                                 {% if products.has_next %}
                                     <li class="page-item">
@@ -1095,7 +1095,7 @@
                                         </a>
                                     </li>
                                 {% endif %}
-                                
+
                             </ul>
                         {% endif %}
                     </nav>
