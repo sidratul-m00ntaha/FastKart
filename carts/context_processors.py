@@ -14,12 +14,10 @@ def counter(request):
         cart = Cart.objects.filter(session_key=get_session_key(request)).last()
 
     if cart:
-        cart_count = (
-            CartItem.objects.filter(cart=cart).aggregate(
-                total_quantity=Sum("quantity")
-            )["total_quantity"]
-            or 0
+        query_result = CartItem.objects.filter(cart=cart).aggregate(
+            total_quantity=Sum("quantity", default=0)
         )
+        cart_count = query_result["total_quantity"]
     else:
         cart_count = 0
 
