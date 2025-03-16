@@ -22,8 +22,3 @@ class CartItem(TimeStampedModel):
 
     def __str__(self):
         return f"CartItem: {self.product.name}"
-
-
-class AdminInfo(models.Model):
-    delivery_charge = models.DecimalField()
-    tax_percentage = models.DecimalField()
