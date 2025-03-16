@@ -36,9 +36,6 @@ class Product(TimeStampedModel):
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount_price = models.DecimalField(
-        max_digits=10, decimal_places=2, null=True, blank=True
-    )
     discount_percentage = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00
     )
@@ -57,9 +54,9 @@ class Product(TimeStampedModel):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-    # @property
-    # def discount_price(self):
-    #     return self.price * (1 - self.discount_percentage / 100)
+    @property
+    def discount_price(self):
+        return self.price * (1 - self.discount_percentage / 100)
 
     @property
     def savings(self):
