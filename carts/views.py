@@ -54,12 +54,10 @@ def remove_cart(request, product_slug):
 
 def cart_detail(request, total=0, quantity=0, cart_items=None):
     if request.user.is_authenticated:
-        cart_items = CartItem.objects.filter(user=request.user).select_related(
-            "product"
-        )
+        cart = get_object_or_404(Cart, user=request.user)
     else:
         cart = get_object_or_404(Cart, session_key=get_session_key(request))
-        cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
 
     total = 0
     for cart_item in cart_items:

@@ -4,12 +4,13 @@ from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from sslcommerz_python_api import SSLCSession
 
-from carts.models import CartItem
+from carts.models import Cart, CartItem
+from carts.utils import get_session_key
 from products.models import Product
 
 from .models import Order, OrderProduct, Payment
@@ -25,7 +26,8 @@ def place_order(
 ):
     current_user = request.user
 
-    cart_items = CartItem.objects.filter(user=current_user).select_related("product")
+    cart = get_object_or_404(Cart, session_key=get_session_key(request))
+    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
     cart_count = cart_items.count()
     if cart_count <= 0:
         return redirect("home")
@@ -187,8 +189,8 @@ def sslc_complete(request, val_id, tran_id):
         order.payment = payment
         order.save()
 
-        cart_items = CartItem.objects.filter(user=request.user)
-        cart_items.delete()
+        # CartItems will be automatically deleted
+        Cart.objects.filter(user=request.user).delete()
 
         context = {
             "order": order,
