@@ -12,6 +12,7 @@ def send_verification_email(request, user):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
 
     current_site = get_current_site(request)
+    # TODO: use reverse()
     verification_link = f"http://{current_site.domain}/accounts/verify/{uid}/{token}"
 
     email_subject = "Verify Your Email Address"
@@ -36,6 +37,7 @@ def send_password_reset_email(request, user):
     uid = urlsafe_base64_encode(force_bytes(user.pk))
 
     current_site = get_current_site(request)
+    # TODO: use reverse()
     verification_link = (
         f"http://{current_site.domain}/accounts/reset-password-confirm/{uid}/{token}"
     )
