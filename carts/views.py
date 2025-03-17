@@ -68,6 +68,6 @@ def cart_detail(request, total=0, quantity=0, cart_items=None):
         "total": total,
         "quantity": quantity,
         "cart_items": cart_items,
-        "grand_total": float(total) + settings.DELIVERY_CHARGE,
+        "grand_total": total + settings.DELIVERY_CHARGE,
     }
     return render(request, "carts/cart.html", context)

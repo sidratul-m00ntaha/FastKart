@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from decimal import Decimal
 from pathlib import Path
 
 import environ
@@ -171,4 +172,4 @@ SSLCOMMERZ_STORE_ID = env("SSLCOMMERZ_STORE_ID")
 SSLCOMMERZ_STORE_PASS = env("SSLCOMMERZ_STORE_PASS")
 
 
-DELIVERY_CHARGE = env("DELIVERY_CHARGE")
+DELIVERY_CHARGE = Decimal(env("DELIVERY_CHARGE"))

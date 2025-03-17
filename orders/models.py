@@ -33,7 +33,7 @@ class Order(TimeStampedModel):
     postcode = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     order_note = models.CharField(max_length=100, blank=True)
-    order_total = models.FloatField()
+    order_total = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=STATUS, default="New")
     is_ordered = models.BooleanField(default=False)
 
