@@ -33,20 +33,17 @@ def add_cart(request, product_slug):
 
 def remove_cart(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
-    try:
-        if request.user.is_authenticated:
-            cart_item = CartItem.objects.get(product=product, user=request.user)
-        else:
-            cart = Cart.objects.get(session_key=get_session_key(request))
-            cart_item = CartItem.objects.get(product=product, cart=cart)
+    if request.user.is_authenticated:
+        cart = get_object_or_404(Cart, user=request.user)
+    else:
+        cart = get_object_or_404(Cart, session_key=get_session_key(request))
 
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
-            cart_item.save()
-        else:
-            cart_item.delete()
-    except Exception:
-        pass
+    cart_item = get_object_or_404(CartItem, product=product, cart=cart)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
 
     url = request.META.get("HTTP_REFERER")
     return redirect(url)
@@ -57,8 +54,8 @@ def cart_detail(request, total=0, quantity=0, cart_items=None):
         cart = get_object_or_404(Cart, user=request.user)
     else:
         cart = get_object_or_404(Cart, session_key=get_session_key(request))
-    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
 
+    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
     total = 0
     for cart_item in cart_items:
         total += cart_item.product.discount_price * cart_item.quantity
