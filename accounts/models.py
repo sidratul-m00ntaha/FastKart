@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .managers import CustomUserManager
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -19,6 +21,8 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     username = None
+
+    objects = CustomUserManager()
 
     def full_address(self):
         return f"{self.address_line_1} {self.address_line_2}"
