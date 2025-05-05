@@ -35,7 +35,7 @@ def category_products(request, category_slug):
 
 def product_detail(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
-    reviews = product.reviews.filter(status=True)
+    reviews = product.reviews.all()
 
     rating_counts = {
         "5": product.reviews.filter(rating__gt=4.4, rating__lte=5.1).count(),
