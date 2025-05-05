@@ -173,3 +173,6 @@ SSLCOMMERZ_STORE_PASS = env("SSLCOMMERZ_STORE_PASS")
 
 
 DELIVERY_CHARGE = Decimal(env("DELIVERY_CHARGE"))
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
