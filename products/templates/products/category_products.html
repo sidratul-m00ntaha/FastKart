@@ -852,7 +852,7 @@
                             <div class="product-box-3 h-100 wow fadeInUp">
                                 <div class="product-header">
                                     <div class="product-image">
-                                        <a href="product-left-thumbnail.html">
+                                        <a href="">
                                             <img src="{{product.images.first.image.url }}"
                                                 class="img-fluid blur-up lazyload" alt="">
                                         </a>
@@ -891,7 +891,7 @@
                                 <div class="product-footer">
                                     <div class="product-detail">
                                         <span class="span-name">{{category.category_name}}</span>
-                                        <a href="product-left-thumbnail.html">
+                                        <a href="">
                                             <h5 class="name">{{product.name}}</h5>
                                         </a>
                                         <p class="text-content mt-1 mb-2 product-content">{{product.description}}</p>
@@ -911,13 +911,13 @@
                                         <div class="add-to-cart-box bg-white">
                                             <div class="cart_qty qty-box">
                                                 <div class="input-group bg-white">
-                                                    <a href={%url 'remove_cart' product.slug%} type="button" class="qty-left-minus bg-gray"
+                                                    <a href="" type="button" class="qty-left-minus bg-gray"
                                                         data-type="minus" data-field="">
                                                         <i class="fa fa-minus"></i>
                                                     </a>
                                                     <input class="form-control input-number qty-input" type="text"
                                                         name="quantity" value="0">
-                                                    <a href={%url 'remove_cart' product.slug%} type="button" class="qty-right-plus bg-gray"
+                                                    <a href="" type="button" class="qty-right-plus bg-gray"
                                                         data-type="plus" data-field="">
                                                         <i class="fa fa-plus"></i>
                                                     </a>
@@ -1021,7 +1021,7 @@
                                                         <a href= "#"
                                                             class="btn btn-md add-cart-button icon">Add
                                                             To Cart</a>
-                                                        <a onclick="location.href = '{% url 'product_detail' product.slug %}';"
+                                                        <a onclick="location.href = '';"
                                                             class="btn theme-bg-color view-button icon text-white fw-bold btn-md">
                                                             View More Details</a>
                                                     </div>

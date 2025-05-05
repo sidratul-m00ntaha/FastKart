@@ -156,7 +156,8 @@
                                         alt="{{category.category_name}}">
                                 </a>
                                 <!-- #TODO: set category_products page -->
-                                <button onclick="location.href = '';" class="btn shop-button">
+                                <button onclick="location.href = '{% url 'category_products' category.slug %}';"
+                                    class="btn shop-button">
                                     <span>Shop Now</span>
                                     <i class="fas fa-angle-right"></i>
                                 </button>
