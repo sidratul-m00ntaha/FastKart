@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from products.models import Product
 
-from .models import Cart, CartItem
+from .models import Cart, CartProduct
 from .utils import get_session_key
 
 
@@ -12,20 +12,21 @@ def add_cart(request, product_slug):
     try:
         cart = Cart.objects.get(session_key=get_session_key(request))
     except Cart.DoesNotExist:
-        cart = Cart.objects.create(session_key=get_session_key(request))
+        cart = Cart.objects.create(
+            session_key=get_session_key(request), user=request.user
+        )
 
     try:
-        cart_item = CartItem.objects.get(product=product, cart=cart)
-    except CartItem.DoesNotExist:
-        cart_item = CartItem(
+        cart_product = CartProduct.objects.get(product=product, cart=cart)
+    except CartProduct.DoesNotExist:
+        cart_product = CartProduct(
             product=product,
             cart=cart,
-            user=request.user,
             quantity=0,
         )
 
-    cart_item.quantity += 1
-    cart_item.save()
+    cart_product.quantity += 1
+    cart_product.save()
 
     url = request.META.get("HTTP_REFERER")
     return redirect(url)
@@ -38,33 +39,33 @@ def remove_cart(request, product_slug):
     else:
         cart = get_object_or_404(Cart, session_key=get_session_key(request))
 
-    cart_item = get_object_or_404(CartItem, product=product, cart=cart)
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
+    cart_product = get_object_or_404(CartProduct, product=product, cart=cart)
+    if cart_product.quantity > 1:
+        cart_product.quantity -= 1
+        cart_product.save()
     else:
-        cart_item.delete()
+        cart_product.delete()
 
     url = request.META.get("HTTP_REFERER")
     return redirect(url)
 
 
-def cart_detail(request, total=0, quantity=0, cart_items=None):
+def cart_detail(request, total=0, quantity=0, cart_products=None):
     if request.user.is_authenticated:
         cart = get_object_or_404(Cart, user=request.user)
     else:
         cart = get_object_or_404(Cart, session_key=get_session_key(request))
 
-    cart_items = CartItem.objects.filter(cart=cart).select_related("product")
+    cart_products = CartProduct.objects.filter(cart=cart).select_related("product")
     total = 0
-    for cart_item in cart_items:
-        total += cart_item.product.discount_price * cart_item.quantity
-        quantity += cart_item.quantity
+    for cart_product in cart_products:
+        total += cart_product.product.price * cart_product.quantity
+        quantity += cart_product.quantity
 
     context = {
         "total": total,
         "quantity": quantity,
-        "cart_items": cart_items,
+        "cart_items": cart_products,
         "grand_total": total + settings.DELIVERY_CHARGE,
     }
     return render(request, "carts/cart.html", context)

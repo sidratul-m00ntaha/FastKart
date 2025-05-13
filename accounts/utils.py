@@ -9,7 +9,7 @@ from django.utils.http import urlsafe_base64_encode
 
 def send_verification_email(request, user):
     token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    uid = urlsafe_base64_encode(force_bytes(user.id))
 
     current_site = get_current_site(request)
     # TODO: use reverse()
@@ -24,7 +24,7 @@ def send_verification_email(request, user):
     email = EmailMessage(
         subject=email_subject,
         body=email_body,
-        from_email=settings.DEFAULT_FROM_EMAIL,
+        from_email=settings.EMAIL_HOST_USER,
         to=[user.email],
     )
 
@@ -34,7 +34,7 @@ def send_verification_email(request, user):
 
 def send_password_reset_email(request, user):
     token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    uid = urlsafe_base64_encode(force_bytes(user.id))
 
     current_site = get_current_site(request)
     # TODO: use reverse()

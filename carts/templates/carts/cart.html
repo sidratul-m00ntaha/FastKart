@@ -106,13 +106,13 @@
                                             <div class="quantity-price">
                                                 <div class="cart_qty">
                                                     <div class="input-group">
-                                                        <a href={%url 'remove_cart' cart_item.product.slug%} type="button" class="btn qty-left-minus"
+                                                        <a href={% url 'remove_cart' cart_item.product.slug%} type="button" class="btn qty-left-minus"
                                                             data-type="minus" data-field="">
                                                             <i class="fa fa-minus ms-0"></i>
                                                         </a>
                                                         <input class="form-control input-number qty-input" type="text"
                                                             name="quantity" value="{{cart_item.quantity}}">
-                                                        <a href={%url 'add_cart' cart_item.product.slug%} type="button" class="btn qty-right-plus"
+                                                        <a href={% url 'add_cart' cart_item.product.slug%} type="button" class="btn qty-right-plus"
                                                             data-type="plus" data-field="">
                                                             <i class="fa fa-plus ms-0"></i>
                                                         </a>
@@ -129,7 +129,7 @@
                                         <td class="save-remove">
                                             <h4 class="table-title text-content">Action</h4>
                                             <a class="save notifi-wishlist" href="javascript:void(0)">Save for later</a>
-                                            <a  href="{% url 'remove_cart_item' cart_item.product.slug%}" class="remove close_button">Remove</a>
+                                            <a  href="{% url 'remove_cart' cart_item.product.slug%}" class="remove close_button">Remove</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -167,7 +167,7 @@
 
                                 <li class="align-items-start">
                                     <h4>Shipping</h4>
-                                    <h4 class="price text-end">$6.90</h4>
+                                    <h4 class="price text-end"></h4>
                                 </li>
                             </ul>
                         </div>
@@ -182,7 +182,7 @@
                         <div class="button-group cart-button">
                             <ul>
                                 <li>
-                                    <a href = "{% url 'place_order'%}"
+                                    <a href = "{% url 'place_order' %}"
                                         class="btn btn-animation proceed-btn fw-bold">Process To Checkout</a>
                                 </li>
 

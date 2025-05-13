@@ -9,10 +9,10 @@ urlpatterns = [
         views.category_products,
         name="category_products",
     ),
-    path("products/<slug:product_slug>/", views.product_detail, name="product_detail"),
+    path("products/<slug:product_slug>", views.product_detail, name="product_detail"),
     path(
-        "products/<slug:product_slug>/review/",
-        views.submit_review,
+        "products/<slug:product_slug>/submit-review",
+        views.submit_view,
         name="submit_review",
     ),
 ]

@@ -163,8 +163,8 @@
                                         </button>
                                     </div>
                                 </div>
-                                <!-- # TODO: add add_cart later -->
-                                <a href="#" class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</a>
+                                <a href="{% url 'add_cart' product.slug %}" class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</a>
+                                <a href="{% url 'remove_cart' product.slug %}" class="btn btn-md bg-dark cart-button text-white w-100">Remove From Cart</a>
                             </div>
 
                             <div class="progress-sec">

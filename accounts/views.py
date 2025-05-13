@@ -18,8 +18,28 @@ def user_signup(request):
             send_verification_email(request, user)
             messages.info(request, "We have sent you an verfication email")
             return redirect("login")
+        else:
+            return redirect("signup")
         # TODO: show form errors in template
-    return render(request, "accounts/signup.html")
+    else:
+        return render(request, "accounts/signup.html")
+
+
+def verify_email(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = CustomUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = None
+
+    if user and default_token_generator.check_token(user, token):
+        user.is_verified = True
+        user.save()
+        messages.success(request, "Your email has been verified successfully.")
+        return redirect("login")
+    else:
+        messages.error(request, "The verification link is invalid or has expired.")
+        return redirect("signup")
 
 
 def user_login(request):
@@ -44,45 +64,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("signup")
-
-
-@login_required
-def user_dashboard(request):
-    user = request.user
-
-    if request.method == "POST":
-        # TODO: use a form and show form errors in template
-        # TODO: let user change password
-        user.email = request.POST.get("email", user.email)
-        user.mobile = request.POST.get("mobile", user.mobile)
-        user.address_line_1 = request.POST.get("address_line_1", user.address_line_1)
-        user.address_line_2 = request.POST.get("address_line_2", user.address_line_2)
-        user.city = request.POST.get("city", user.city)
-        user.postcode = request.POST.get("postcode", user.postcode)
-        user.country = request.POST.get("country", user.country)
-        user.save()
-
-        return redirect("profile")
-
-    context = {"user_info": user}
-    return render(request, "accounts/profile.html", context)
-
-
-def verify_email(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = CustomUser.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
-        user = None
-
-    if user and default_token_generator.check_token(user, token):
-        user.is_verified = True
-        user.save()
-        messages.success(request, "Your email has been verified successfully.")
-        return redirect("login")
-    else:
-        messages.error(request, "The verification link is invalid or has expired.")
-        return redirect("signup")
 
 
 def reset_password(request):
@@ -131,3 +112,20 @@ def set_new_password(request):
         messages.success(request, "Password updated successfully.")
         return redirect("profile")
     return render(request, "accounts/new-password.html")
+
+
+@login_required
+def user_dashboard(request):
+    if request.method == "POST":
+        user = request.user
+
+        user.email = request.POST.get("email", user.email)
+        user.mobile = request.POST.get("mobile", user.mobile)
+        user.address_line_1 = request.POST.get("address_line_1", user.address_line_1)
+        user.address_line_2 = request.POST.get("address_line_2", user.address_line_2)
+        user.city = request.POST.get("city", user.city)
+        user.postcode = request.POST.get("postcode", user.postcode)
+        user.country = request.POST.get("country", user.country)
+        user.save()
+
+    return render(request, "accounts/profile.html")

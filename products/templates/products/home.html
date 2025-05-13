@@ -147,17 +147,16 @@
                     <div>
                         <div class="category-box-list">
                             <a href="shop-left-sidebar.html" class="category-name">
-                                <h4>{{category.category_name}}</h4>
+                                <h4>{{category.name}}</h4>
                                 <h6>{{ category.product_count }} items</h6>
                             </a>
                             <div class="category-box-view">
                                 <a href="shop-left-sidebar.html">
-                                    <img src="{{ category.category_image.url }}" class="img-fluid blur-up lazyload"
-                                        alt="{{category.category_name}}">
+                                    <img src="{{ category.image.url }}" class="img-fluid blur-up lazyload"
+                                        alt="{{category.name}}">
                                 </a>
                                 <!-- #TODO: set category_products page -->
-                                <button onclick="location.href = '{% url 'category_products' category.slug %}';"
-                                    class="btn shop-button">
+                                <button onclick="location.href = '{% url "category_products" category.slug %}';" class="btn shop-button">
                                     <span>Shop Now</span>
                                     <i class="fas fa-angle-right"></i>
                                 </button>
