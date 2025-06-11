@@ -176,3 +176,6 @@ cython_debug/
 # static and media root directory
 media/
 static/
+
+# .gitignore
+.env
